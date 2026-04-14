@@ -1,0 +1,40 @@
+# 🛒 KiranaConnect (Version 1.0)
+
+A production-grade, multi-tenant distributed system built for local Kirana stores to manage inventory, process orders, and route deliveries in real-time. 
+
+## 🏗️ System Architecture
+KiranaConnect utilizes Role-Based Access Control (RBAC) to serve three distinct user types from a unified backend:
+1. **Customers:** Browse local stores, add items to cart, and track orders.
+2. **Store Owners:** Manage inventory and pack incoming orders via a dedicated merchant dashboard.
+3. **Delivery Partners:** Accept and route deliveries via a real-time availability pool.
+
+## 💻 Tech Stack (Current)
+* **Backend:** Node.js, Express.js
+* **Database:** MongoDB (Mongoose ORM)
+* **Authentication:** JWT (JSON Web Tokens) with strict RBAC middleware.
+
+## 🚀 Local Development Setup
+
+1. Clone the repository
+\`\`\`bash
+git clone <your-github-repo-link>
+\`\`\`
+
+2. Install backend dependencies
+\`\`\`bash
+cd backend
+npm install
+\`\`\`
+
+3. Set up Environment Variables
+Create a \`.env\` file in the \`backend\` directory:
+\`\`\`text
+PORT=3000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_super_secret_key
+\`\`\`
+
+4. Start the server
+\`\`\`bash
+npm run dev
+\`\`\`
