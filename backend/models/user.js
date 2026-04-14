@@ -11,7 +11,8 @@ const userSchema = new Schema({
     email: {
         type: String,
         lowercase: true,
-        trim: true
+        trim: true,
+        sparse : true
     },
     password: {
         type: String,
@@ -19,29 +20,27 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ["Customer", "StoreOwner", "DeliveryPartner"],
+        enum: ["Customer", "StoreOwner", "DeliveryPartner","admin"],
         required: true
     },
-    
+    address: { type: String, trim: true },
+    city: { type: String, trim: true },
+    pincode: { type: String, trim: true },
+    location: {
+        lat: { type: Number },
+        lng: { type: Number }
+    },
+    profileImage: { type: String },
+  isActive: { type: Boolean, default: true },
     favStores: [{
         type: Schema.Types.ObjectId,
         ref: "Stores" 
     }],
     
-    cart: [{
-        storeId: { 
-            type: Schema.Types.ObjectId, 
-            ref: "Stores" 
-        },
-        quantity: { 
-            type: Number, 
-            default: 1 
-        }
-    }]
 }, { 
     timestamps: true 
 });
 
-const UserModel = mongoose.model("User", userSchema);
+const UserModel = mongoose.model("Users", userSchema);
 
 module.exports = { UserModel };
