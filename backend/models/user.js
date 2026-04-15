@@ -31,7 +31,7 @@ const userSchema = new Schema({
         lng: { type: Number }
     },
     profileImage: { type: String },
-  isActive: { type: Boolean, default: true },
+    isActive: { type: Boolean, default: true },
     favStores: [{
         type: Schema.Types.ObjectId,
         ref: "Stores" 

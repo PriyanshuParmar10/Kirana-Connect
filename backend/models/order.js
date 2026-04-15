@@ -17,12 +17,14 @@ const orderSchema = new Schema({
     ref: "User",
     default: null
   },
+  
   items: [{
     productId: { type: Schema.Types.ObjectId, ref: "Products" },
     itemName: String,      
     price: Number,    
     quantity: Number
   }],
+
   totalAmount: { type: Number, required: true },
   deliveryFee: { type: Number, default: 0 },
 

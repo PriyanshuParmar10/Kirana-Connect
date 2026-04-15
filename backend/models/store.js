@@ -22,6 +22,7 @@ const storeSchema = new Schema({
     type: { type: String, default: "Point" },
     coordinates: [Number]
   },
+  
   deliveryRadius: { type: Number, default: 5 },
   deliveryFee: { type: Number, default: 0 },
   minOrderAmount: { type: Number, default: 0 },
