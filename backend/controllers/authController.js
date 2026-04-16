@@ -12,6 +12,12 @@ const register = async (req, res) => {
     try {
         const { phoneNumber, password, role, email } = req.body;
 
+        if (!phoneNumber || !password || !role) {
+            return res.status(400).json({
+                message: "Phone number, password and role are required"
+            });
+        }
+
         const userExists = await UserModel.findOne({ phoneNumber });
         if (userExists) {
             return res.status(400).json({ message: "User already exists" });
