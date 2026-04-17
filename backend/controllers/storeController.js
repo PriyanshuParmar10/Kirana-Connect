@@ -36,7 +36,7 @@ const createStore = async (req, res) => {
 
 const getNearbyStores = async (req, res) => {
     try{
-        const {lat, lng, radius } = req.query;
+        const {lat, lng, radius, category } = req.query;
         const radiusInMeters = radius ? parseInt(radius) * 1000 : 5000;
 
         if(!lat || !lng){
