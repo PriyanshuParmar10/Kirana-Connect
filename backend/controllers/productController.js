@@ -14,9 +14,6 @@ const addProduct = async (req, res) => {
 
         const store = await StoreModel.findById(storeId);
         if(!store) return res.status(404).json({message : "Store not found! "});
-
-        console.log("Database Store Owner ID:", store.ownerId.toString());
-        console.log("Thunder Client Token ID:", req.user.id);
         
         if (store.ownerId.toString() !== req.user.id) {
             return res.status(401).json({ message: "Unauthorized: You do not own this store." });
@@ -65,6 +62,8 @@ const updateProduct = async (req, res) => {
         if (!product) return res.status(404).json({ message: "Product not found" });
 
         const store = await StoreModel.findById(product.storeId);
+
+        if (!store) return res.status(404).json({ message: "Associated store not found" });
         if (store.ownerId.toString() !== req.user.id) {
             return res.status(401).json({ message: "Unauthorized: You do not own this store." });
         }
@@ -115,6 +114,9 @@ const deleteProduct = async (req,res) => {
         if (!product) return res.status(404).json({ message: "Product not found" });
 
         const store = await StoreModel.findById(product.storeId);
+
+        if (!store) return res.status(404).json({ message: "Associated store not found" });
+
         if (store.ownerId.toString() !== req.user.id) {
             return res.status(401).json({ message: "Unauthorized: You do not own this store." });
         }
