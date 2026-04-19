@@ -38,15 +38,15 @@ const orderSchema = new Schema({
   status: {
     type: String,
     enum: [
-      "Pending",  
-      "Confirmed",  
-      "Preparing",    
-      "Ready_For_Pickup",
-      "Out_For_Delivery",
-      "Delivered",
-      "Cancelled" 
+            "PLACED", 
+            "CONFIRMED", 
+            "PREPARING", 
+            "READY", 
+            "PICKED_UP", 
+            "DELIVERED", 
+            "CANCELLED" 
     ],
-    default: "Pending"
+    default: "PLACED"
   },
   cancellationReason: { type: String },
   paymentMethod: {

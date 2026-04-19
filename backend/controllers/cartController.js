@@ -7,6 +7,12 @@ const addToCart = async (req, res) => {
         const { productId, quantity } = req.body;
         const customerId = req.user.id;
 
+        if (!productId || !quantity || quantity < 1) {
+            return res.status(400).json({
+                message: "productId and quantity (min 1) are required"
+            });
+        }
+        
         const product = await ProductModel.findById(productId);
 
         if(!product || !product.isAvailable){
@@ -28,7 +34,7 @@ const addToCart = async (req, res) => {
             });
         }
         else if(cart.storeId.toString() !== storeId){
-            art.items = [];
+            cart.items = [];
             cart.storeId = storeId;
         }
 
