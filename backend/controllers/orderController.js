@@ -1,7 +1,7 @@
 const { OrderModel } = require("../models/order");
 const { CartModel } = require("../models/cart");
 const { StoreModel } = require("../models/store");
-
+const { UserModel } = require("../models/user");
 const placeOrder = async (req, res) => {
     try{
         const {deliveryAddress } = req.body;
@@ -48,12 +48,13 @@ const getMyOrders = async (req, res) => {
 const getOrderById = async (req, res) => {
     try{
         const order = await OrderModel.findById(req.params.id)
-            .populate("storeId", "storeName")
-            .populate("customerId", "name email phone");
+            .populate("storeId", "storeName");
 
         if (!order) return res.status(404).json({ message: "Order not found" });
 
-        if (req.user.role === "Customer" && order.customerId._id.toString() !== req.user.id) {
+        const safeCustomerId = order.customerId._id ? order.customerId._id.toString() : order.customerId.toString();
+
+        if (req.user.role === "Customer" && safeCustomerId !== req.user.id) {
             return res.status(403).json({ message: "Unauthorized: You cannot view this order." });
         }
 

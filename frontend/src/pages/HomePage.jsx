@@ -21,6 +21,12 @@ export default function HomePage(){
     return(
         <div style={{padding : "20px"}}>
             <h2>Nearby Kirana Stores</h2>
+            <button 
+                onClick={() => navigate('/my-orders')}
+                style={{ padding: '10px 20px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+            >
+                📦 My Orders
+            </button>
             <div style={{display : 'flex', gap : '15px', flexWrap : 'wrap'}}>
                 {stores.map(store => (
                     <div 
@@ -29,7 +35,6 @@ export default function HomePage(){
                         style={{ border: '2px solid black', padding: '15px', cursor: 'pointer', borderRadius: '8px' }}
                     >
                         <h3>{store.storeName}</h3>
-                        {store.dist && <p>Distance: {(store.dist.calculated / 1000).toFixed(2)} km</p>}
                     </div>
                 ))}
                 

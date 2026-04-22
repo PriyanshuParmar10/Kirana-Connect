@@ -3,15 +3,20 @@ import api from "../api/axios"
 import { AuthContext } from "../context/AuthContext";
 
 export default function LoginPage(){
-    const[phoneNum, setPhoneNum] = useState('');
+    const[phoneNumber, setPhoneNumber] = useState('');
     const[password, setPassword] = useState('');
     const { login }  = useContext(AuthContext);
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try{
-            const res = await api.post('/auth/login', {phoneNum, password});
-            login.res(res.data.token, res.data.user);
+            let formattedPhone = phoneNumber.trim();
+            if (!formattedPhone.startsWith("+91")) {
+                formattedPhone = `+91 ${formattedPhone}`; 
+            }
+
+            const res = await api.post('/auth/login', {phoneNumber : formattedPhone,password : password});
+            login(res.data.token, res.data.user);
         }catch(error){
             alert("login failed: "+ (error.response ?.data?.message || "server Error"));
         }
@@ -26,8 +31,8 @@ export default function LoginPage(){
             >
                 <input type="tel" 
                     placeholder="Phone Number (e.g. 9998887776)"
-                    value={phoneNum}
-                    onChange={e => {setPhoneNum(e.target.value)}}
+                    value={phoneNumber}
+                    onChange={e => {setPhoneNumber(e.target.value)}}
                     required
                     style={{padding : "8px"}}
                 />
