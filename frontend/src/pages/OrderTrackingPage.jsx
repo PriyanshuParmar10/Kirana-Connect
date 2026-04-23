@@ -11,6 +11,9 @@ export default function OrderTrackingPage() {
             try{
                 const res = await api.get(`/orders/${id}`);
                 setOrder(res.data);
+                if (res.data.status === "DELIVERED" || res.data.status === "CANCELLED") {
+                    clearInterval(interval);
+                }
             }catch(error){
                 console.error("Error fetching order tracking", error);
             }

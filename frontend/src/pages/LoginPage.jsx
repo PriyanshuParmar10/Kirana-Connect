@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios"
 import { AuthContext } from "../context/AuthContext";
 
@@ -6,6 +7,7 @@ export default function LoginPage(){
     const[phoneNumber, setPhoneNumber] = useState('');
     const[password, setPassword] = useState('');
     const { login }  = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -49,6 +51,9 @@ export default function LoginPage(){
                     Login
                 </button>
             </form>
+            <p style={{ marginTop: '15px', fontSize: '14px' }}>
+                Don't have an account? <span onClick={() => navigate('/signup')} style={{ color: 'blue', cursor: 'pointer', textDecoration: 'underline' }}>Sign up</span>
+            </p>
         </div>
     );
 };

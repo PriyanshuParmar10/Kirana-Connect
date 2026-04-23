@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Navbar from "./components/Navbar";
 
 import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 import HomePage from "./pages/HomePage";
 import ShopPage from "./pages/ShopPage";
 import CartPage from "./pages/CartPage";
@@ -14,9 +16,11 @@ function App(){
   return(
     <BrowserRouter>
       <AuthProvider>
+        <Navbar />
         <Routes>
           {/* public routes */}
           <Route path="/login" element = {<LoginPage/>}/>
+          <Route path="/signup" element={<SignupPage />} />
 
           {/* Protected routes */}
           <Route path="/" element = {
