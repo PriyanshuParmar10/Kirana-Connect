@@ -35,10 +35,12 @@ const register = async (req, res) => {
 
         if (user) {
             res.status(201).json({
-                _id: user.id,
-                phoneNumber: user.phoneNumber,
-                role: user.role,
                 token: generateToken(user._id, user.role),
+                user: {
+                    _id: user.id,
+                    phoneNumber: user.phoneNumber,
+                    role: user.role
+                }
             });
         }
     } catch (error) {
@@ -54,10 +56,13 @@ const login = async (req, res) => {
 
         if (user && (await bcrypt.compare(password, user.password))) {
             res.json({
-                _id: user.id,
-                phoneNumber: user.phoneNumber,
-                role: user.role,
                 token: generateToken(user._id, user.role),
+                user: {
+                    _id: user.id,
+                    phoneNumber: user.phoneNumber,
+                    role: user.role,
+                    email: user.email
+                }
             });
         } else {
             res.status(401).json({ message: "Invalid phone number or password" });

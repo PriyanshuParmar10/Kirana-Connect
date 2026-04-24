@@ -6,6 +6,9 @@ export default function SignupPage() {
     const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
+
+    const [role, setRole] = useState('Customer');
+
     const navigate = useNavigate();
 
     const handleSignup = async (e) => {
@@ -19,7 +22,7 @@ export default function SignupPage() {
                 name, 
                 phoneNumber: formattedPhone, 
                 password, 
-                role : "Customer" 
+                role : role 
             });
             
             alert("Account created! Please log in.");
@@ -47,6 +50,16 @@ export default function SignupPage() {
                     type="password" placeholder="Password" required style={{ padding: "8px" }}
                     value={password} onChange={e => setPassword(e.target.value)}
                 />
+
+                <select 
+                    value={role} 
+                    onChange={e => setRole(e.target.value)} 
+                    style={{ padding: '8px', fontWeight: 'bold', cursor: 'pointer' }}
+                >
+                    <option value="Customer">I am a Customer</option>
+                    <option value="StoreOwner">I want to register my Store</option>
+                    <option value="DeliveryPartner">I want to deliver orders</option>
+                </select>
 
                 <button type="submit" style={{ padding: '10px', cursor: 'pointer', backgroundColor: 'black', color: 'white' }}>
                     Sign Up

@@ -3,6 +3,7 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 
+// routes for customers
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import HomePage from "./pages/HomePage";
@@ -11,6 +12,12 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderTrackingPage from "./pages/OrderTrackingPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
+
+// routes for storeOwners
+import StoreSetupPage from "./pages/StoreSetupPage";
+import StoreOwnerDashboard from "./pages/StoreOwnerDashboard";
+import StoreOrdersPage from "./pages/StoreOrdersPage";
+import StoreProductsPage from "./pages/StoreProductsPage";
 
 function App(){
   return(
@@ -39,6 +46,13 @@ function App(){
           <Route path="/checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
           <Route path="/tracking/:id" element={<ProtectedRoute><OrderTrackingPage /></ProtectedRoute>} />
           <Route path="/my-orders" element={<ProtectedRoute><MyOrdersPage /></ProtectedRoute>} />
+
+
+          {/* store owners */}
+          <Route path="/store/setup" element={<ProtectedRoute><StoreSetupPage /></ProtectedRoute>} />
+          <Route path="/store/dashboard" element={<ProtectedRoute><StoreOwnerDashboard /></ProtectedRoute>} />
+          <Route path="/store/orders" element={<ProtectedRoute><StoreOrdersPage /></ProtectedRoute>} />
+          <Route path="/store/products" element={<ProtectedRoute><StoreProductsPage /></ProtectedRoute>} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

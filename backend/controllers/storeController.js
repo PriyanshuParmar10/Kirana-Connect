@@ -106,4 +106,21 @@ const toggleStoreOpen = async (req, res) => {
     }
 };
 
-module.exports = { createStore, getNearbyStores, getStoreById, toggleStoreOpen };
+const getMyStore = async (req, res) => {
+    try {
+        const store = await StoreModel.findOne({ ownerId: req.user.id });
+        
+        if (!store) {
+            return res.status(404).json({ message: "Store not found. Please create one." });
+        }
+
+        res.json({ 
+            store, 
+            stats: { todayOrders: 0, pendingOrders: 0 } 
+        });
+    } catch(error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = { createStore, getNearbyStores, getStoreById, toggleStoreOpen, getMyStore };

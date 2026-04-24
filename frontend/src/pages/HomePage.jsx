@@ -1,10 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { AuthContext } from "../context/AuthContext";
 
 export default function HomePage(){
     const[stores, setStores] = useState([]);
     const navigate = useNavigate();
+
+    const{ user } = useContext(AuthContext);
+    useEffect(() => {
+        if (user?.role === 'StoreOwner') {
+            navigate('/store/dashboard');
+            return;
+        }
+        if (user?.role === 'DeliveryPartner') {
+            navigate('/delivery/dashboard');
+            return;
+        }
+    }, [user, navigate]);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(async (position) => {
