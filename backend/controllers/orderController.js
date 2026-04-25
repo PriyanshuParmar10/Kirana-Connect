@@ -162,11 +162,73 @@ const getAvailableOrdersForDelivery = async (req, res) => {
     }
 };
 
+const acceptOrder = async (req, res) => {
+    try {
+        const orderId = req.params.id;
+        const validPartnerId = req.user.id;
+
+        const order = await OrderModel.findOneAndUpdate(
+            { _id: orderId, status: "READY" }, 
+            { 
+                status: "PICKED_UP", 
+                deliveryPartnerId: validPartnerId 
+            }, 
+            { new: true }
+        );
+
+        if (!order) {
+            
+            return res.status(400).json({ message: "Order no longer available or already accepted." });
+        }
+
+        res.status(200).json({ message: "Order accepted successfully", order });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const getActiveDelivery = async (req, res) => {
+    try {
+        const validPartnerId = req.user.id;
+
+        const activeOrder = await OrderModel.findOne({
+            deliveryPartnerId: validPartnerId,
+            status: "PICKED_UP"
+        }).populate("storeId", "storeName address city");
+
+        res.status(200).json(activeOrder); 
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const completeDelivery = async (req, res) => {
+    try {
+        const orderId = req.params.id;
+        const validPartnerId = req.user.id;
+
+        const order = await OrderModel.findOneAndUpdate(
+            { _id: orderId, deliveryPartnerId: validPartnerId },
+            { status: "DELIVERED" },
+            { new: true }
+        );
+
+        if (!order) return res.status(404).json({ message: "Order not found or not assigned to you." });
+        
+        res.status(200).json({ message: "Delivery completed successfully!", order });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     placeOrder,
     getMyOrders,
     getOrderById,
     updateOrderStatus,
     getShopOrders,
-    getAvailableOrdersForDelivery
+    getAvailableOrdersForDelivery,
+    acceptOrder,
+    getActiveDelivery,
+    completeDelivery
 };

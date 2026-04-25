@@ -7,7 +7,10 @@ const {
     getOrderById,
     updateOrderStatus,
     getShopOrders,
-    getAvailableOrdersForDelivery
+    getAvailableOrdersForDelivery,
+    acceptOrder,
+    getActiveDelivery,
+    completeDelivery
 } = require("../controllers/orderController");
 
 const { protect, authorize } = require("../middleware/authMiddleware");
@@ -23,6 +26,9 @@ router.get("/store/:storeId", authorize("StoreOwner"), getShopOrders);
 
 // routes for delivery
 router.get("/delivery/available", authorize("DeliveryPartner"), getAvailableOrdersForDelivery);
+router.put("/:id/accept", authorize("DeliveryPartner"), acceptOrder);
+router.get("/delivery/active", authorize("DeliveryPartner"), getActiveDelivery);
+router.put("/:id/complete", authorize("DeliveryPartner"), completeDelivery);
 
 // shared routes
 router.get("/:id", getOrderById);

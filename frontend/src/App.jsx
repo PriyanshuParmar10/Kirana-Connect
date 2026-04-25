@@ -19,6 +19,10 @@ import StoreOwnerDashboard from "./pages/StoreOwnerDashboard";
 import StoreOrdersPage from "./pages/StoreOrdersPage";
 import StoreProductsPage from "./pages/StoreProductsPage";
 
+// routes for deliveryPartners
+import DeliverySetupPage from "./pages/DeliverySetupPage";
+import DeliveryDashboard from "./pages/DeliveryDashboard";
+
 function App(){
   return(
     <BrowserRouter>
@@ -53,6 +57,10 @@ function App(){
           <Route path="/store/dashboard" element={<ProtectedRoute><StoreOwnerDashboard /></ProtectedRoute>} />
           <Route path="/store/orders" element={<ProtectedRoute><StoreOrdersPage /></ProtectedRoute>} />
           <Route path="/store/products" element={<ProtectedRoute><StoreProductsPage /></ProtectedRoute>} />
+
+          {/* delivery partners */}
+          <Route path="/delivery/setup" element={<ProtectedRoute><DeliverySetupPage /></ProtectedRoute>} />
+          <Route path="/delivery/dashboard" element={<ProtectedRoute><DeliveryDashboard /></ProtectedRoute>} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
